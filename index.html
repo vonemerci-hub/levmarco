@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LevBarber — Premium Grooming Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{--gold:#B8965A;--gold-light:#D4AA72;--gold-dim:rgba(184,150,90,0.15);--cream:#F0E6D3;--ink:#0A0907;--ink2:#111009;--ink3:#171410;--ink4:#1E1A14;--muted:#6B6358;--off:#F8F5F0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--off);font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.025;pointer-events:none;z-index:9999}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5vw;transition:all .4s}
+nav.scrolled{background:rgba(10,9,7,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,150,90,.08)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.14em;color:var(--gold);text-decoration:none}
+.nav-logo span{color:var(--off)}
+.nav-links{display:flex;gap:2.8rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-book{background:var(--gold);color:var(--ink)!important;padding:.5rem 1.3rem;font-weight:500!important;text-decoration:none;cursor:pointer;}
+.nav-book:hover{background:var(--gold-light)!important}
+
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-left{position:relative;z-index:2;padding:10rem 5vw 6rem;width:100%;max-width:750px}
+.hero-img-wrap{position:absolute;inset:0;overflow:hidden;z-index:0}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.65;filter:contrast(1.2) brightness(0.9) grayscale(25%);transform:scale(1.02);animation:slowZoom 20s ease-in-out infinite alternate}
+@keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.08); } }
+.hero-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--ink) 0%,rgba(10,9,7,.85) 45%,transparent 100%),linear-gradient(to top,var(--ink) 0%,transparent 25%),linear-gradient(to bottom,var(--ink) 0%,transparent 15%)}
+
+.hero-tag{display:inline-flex;align-items:center;gap:.7rem;margin-bottom:1.8rem;opacity:0;animation:up .9s .1s ease forwards}
+.hero-tag-line{width:32px;height:1px;background:var(--gold)}
+.hero-tag span{font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,9vw,8.5rem);line-height:.88;letter-spacing:.02em;opacity:0;animation:up .9s .2s ease forwards}
+h1 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);display:block;font-size:1.05em}
+.hero-desc{margin-top:2rem;font-size:1rem;color:var(--muted);line-height:1.75;max-width:460px;font-weight:300;opacity:0;animation:up .9s .3s ease forwards}
+.hero-desc strong{color:var(--cream);font-weight:400}
+.hero-btns{margin-top:2.8rem;display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:up .9s .4s ease forwards}
+.btn-gold{background:var(--gold);color:var(--ink);padding:.9rem 2rem;font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .25s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 12px 36px rgba(184,150,90,.22)}
+.btn-ghost{background:transparent;color:var(--off);padding:.9rem 2rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:all .25s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.hero-pills{margin-top:3rem;display:flex;gap:1.2rem;flex-wrap:wrap;opacity:0;animation:up .9s .5s ease forwards}
+.pill{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.45rem}
+.pill::before{content:'';width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0}
+
+.hero-social{position:absolute;right:2rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1.2rem;z-index:10}
+.hero-social a{color:rgba(255,255,255,.3);transition:color .2s;text-decoration:none}
+.hero-social a:hover{color:var(--gold)}
+
+.scroll-ind{position:absolute;bottom:2.5rem;right:5vw;display:flex;align-items:center;gap:1rem;z-index:2;opacity:0;animation:up 1s .8s ease forwards}
+.scroll-ind span{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.scroll-line{width:40px;height:1px;background:linear-gradient(to right,var(--gold),transparent)}
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+.ticker{background:var(--gold);overflow:hidden;white-space:nowrap;padding:.65rem 0}
+.ticker-inner{display:inline-flex;animation:scroll 30s linear infinite}
+.ticker-item{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.2em;color:var(--ink);padding:0 2.5rem}
+.ticker-dot{opacity:.4;margin-right:.5rem}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+section{padding:7rem 5vw}
+.s-label{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.s-label-line{width:28px;height:1px;background:var(--gold)}
+.s-label span{font-size:.65rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
+h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5.5vw,4.8rem);letter-spacing:.03em;line-height:.95}
+h2 em{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
+
+#stats{padding:0;background:var(--ink3);border-top:1px solid rgba(184,150,90,.12);border-bottom:1px solid rgba(184,150,90,.12)}
+.stats-row{display:flex;padding:0 5vw}
+.stat{flex:1;padding:2.8rem 1.5rem;text-align:center;position:relative}
+.stat:not(:last-child)::after{content:'';position:absolute;top:22%;right:0;width:1px;height:56%;background:rgba(184,150,90,.1)}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--gold);line-height:1}
+.stat-l{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.35rem}
+
+#services{background:var(--ink2)}
+.services-intro{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem;gap:2rem;flex-wrap:wrap}
+.services-intro p{font-size:.95rem;color:var(--muted);line-height:1.7;max-width:380px}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(184,150,90,.08)}
+.srv{background:var(--ink2);padding:2.8rem 2rem;position:relative;overflow:hidden;transition:background .3s}
+.srv::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.srv:hover{background:var(--ink4)}
+.srv:hover::after{transform:scaleX(1)}
+.srv-icon{width:42px;height:42px;margin-bottom:1.5rem}
+.srv-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.05em;margin-bottom:.5rem}
+.srv-desc{font-size:.82rem;color:var(--muted);line-height:1.7;margin-bottom:1.2rem}
+.srv-price{font-size:.8rem;color:var(--gold);letter-spacing:.1em}
+
+#team{background:var(--ink)}
+.team-head{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:5rem}
+.team-sub{font-size:.95rem;color:var(--muted);line-height:1.75;max-width:400px}
+.team-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:1.5rem}
+.bc{background:var(--ink3);border:1px solid rgba(184,150,90,.07);overflow:hidden;transition:all .35s;cursor:default}
+.bc:hover{border-color:rgba(184,150,90,.25);transform:translateY(-5px);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.bc-photo{width:100%;background:var(--ink4);position:relative;overflow:hidden}
+.bc-photo svg{width:100%;height:auto;display:block}
+.bc-info{padding:1.6rem 1.8rem 2rem}
+.bc-name{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.04em;line-height:1}
+.bc-role{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:.35rem 0 .9rem}
+.bc-desc{font-size:.82rem;color:var(--muted);line-height:1.65}
+.bc-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}
+.bc-tag{padding:.2rem .65rem;background:var(--gold-dim);border:1px solid rgba(184,150,90,.18);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.bc-social{margin-top:1.2rem;display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
+.bc-social a{color:var(--muted);text-decoration:none;font-size:.72rem;letter-spacing:.08em;display:flex;align-items:center;gap:.35rem;transition:color .2s}
+.bc-social a:hover{color:var(--gold)}
+.bc.featured{grid-row:span 2;display:flex;flex-direction:column}
+.bc.featured .bc-photo{flex:1;min-height:340px}
+.bc.featured .bc-name{font-size:2.6rem}
+
+#why{background:var(--ink3)}
+.why-wrap{display:grid;grid-template-columns:1fr 1fr;gap:6rem;margin-top:4.5rem;align-items:start}
+.why-list{display:flex;flex-direction:column}
+.why-item{display:flex;gap:1.5rem;padding:2rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.why-item:first-child{padding-top:0}
+.why-item:last-child{border-bottom:none}
+.why-ico{width:44px;height:44px;border:1px solid rgba(184,150,90,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.why-ico svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.why-t{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.05em;margin-bottom:.35rem}
+.why-d{font-size:.83rem;color:var(--muted);line-height:1.7}
+.bilingual{background:var(--ink4);border:1px solid rgba(184,150,90,.2);padding:3.5rem;position:relative;overflow:hidden}
+.bilingual::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.bilingual-flag{width:52px;height:34px;overflow:hidden;margin-bottom:1.5rem;border:1px solid rgba(184,150,90,.15)}
+.bilingual-title{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;line-height:1;color:var(--gold);margin-bottom:.25rem}
+.bilingual-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--muted);margin-bottom:1.5rem}
+.bilingual p{font-size:.88rem;color:var(--muted);line-height:1.8}
+.bilingual strong{color:var(--cream)}
+
+#reviews{background:var(--ink)}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:4rem}
+.rev{background:var(--ink3);border:1px solid rgba(255,255,255,.05);padding:2rem;transition:border-color .3s}
+.rev:hover{border-color:rgba(184,150,90,.2)}
+.rev.feat{border-color:rgba(184,150,90,.2);background:linear-gradient(135deg,var(--ink3),rgba(184,150,90,.04))}
+.rev-q{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--gold);opacity:.25;line-height:.9;margin-bottom:.8rem}
+.rev-txt{font-size:.88rem;color:var(--cream);line-height:1.8;font-style:italic;margin-bottom:1.5rem}
+.rev-txt strong{color:var(--gold);font-style:normal}
+
+#cta{text-align:center;padding:10rem 5vw;background:var(--ink2);position:relative;overflow:hidden;border-top:1px solid rgba(255,255,255,.03);border-bottom:1px solid rgba(184,150,90,.1)}
+#cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(184,150,90,.08) 0%,transparent 60%);pointer-events:none}
+#cta h2{font-size:clamp(3.5rem,7vw,6.5rem);margin:1rem 0 2rem;position:relative;z-index:2}
+#cta p{font-size:1.05rem;color:var(--muted);margin-bottom:3rem;position:relative;z-index:2;font-weight:300}
+
+#info{background:var(--ink);position:relative}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(184,150,90,.15);border:1px solid rgba(184,150,90,.15);margin-top:4rem}
+.info-card{background:var(--ink3);padding:3.5rem 2.5rem;transition:background .3s}
+.info-card:hover{background:var(--ink4)}
+.info-lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem}
+.info-lbl::before{content:'';width:15px;height:1px;background:var(--gold)}
+.info-val{font-size:.9rem;color:var(--muted);line-height:1.8}
+.info-val strong{display:block;font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--cream);letter-spacing:.05em;margin-bottom:.5rem;font-weight:normal;line-height:1}
+
+.map-wrap { margin-top: 4rem; position: relative; width: 100%; height: 450px; background: var(--ink3); border: 1px solid rgba(184,150,90,0.15); overflow: hidden; }
+.map-wrap iframe { width: 100%; height: 100%; border: 0; filter: grayscale(100%) invert(92%) contrast(83%) opacity(0.75); transition: all 0.5s ease; pointer-events: none; }
+.map-wrap:hover iframe { filter: grayscale(70%) invert(92%) contrast(90%) opacity(0.9); pointer-events: auto; }
+.map-btn { position: absolute; bottom: 30px; right: 30px; background: var(--gold); color: var(--ink); padding: 0.9rem 1.8rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); transition: all 0.3s; text-decoration: none; border-radius: 2px; }
+.map-btn:hover { background: var(--gold-light); transform: translateY(-4px); }
+
+footer{background:var(--ink4);padding:6rem 5vw 2rem}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid rgba(255,255,255,.05);padding-bottom:4rem;margin-bottom:3rem;flex-wrap:wrap;gap:3rem}
+.foot-logo{font-family:'Bebas Neue',sans-serif;font-size:4.5rem;line-height:.8;color:var(--gold);letter-spacing:.05em}
+.foot-logo span{color:var(--cream)}
+.foot-social{display:flex;gap:1rem;flex-wrap:wrap}
+.foot-social a{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border:1px solid rgba(255,255,255,.08);border-radius:50%;color:var(--cream);transition:all .3s;cursor:pointer;}
+.foot-social a:hover{border-color:var(--gold);background:var(--gold);color:var(--ink);transform:translateY(-4px)}
+.foot-social a svg{width:20px;height:20px}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:2rem}
+.foot-copy{font-size:.75rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.foot-nav{display:flex;gap:2rem;list-style:none}
+.foot-nav a{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.15em;text-decoration:none;transition:color .3s}
+.foot-nav a:hover{color:var(--gold)}
+
+.agency-sig{text-align:center;margin-top:50px;padding-top:25px;font-size:10px;text-transform:uppercase;letter-spacing:0.4em;color:var(--muted);border-top:1px dashed rgba(184,150,90,0.15);}
+.agency-sig a{color:var(--gold);font-weight:600;transition:opacity 0.3s;text-decoration:none}
+.agency-sig a:hover{opacity:0.7}
+
+.sticky-cta{display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:400;background:var(--gold);color:var(--ink);padding:.9rem 2.2rem;font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;box-shadow:0 8px 28px rgba(184,150,90,.3);white-space:nowrap;cursor:pointer;}
+
+.r{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.r.v{opacity:1;transform:translateY(0)}
+
+/* --- MODALS --- */
+.modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s ease;padding:20px;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-box{background:var(--ink2);border:1px solid rgba(184,150,90,0.2);border-radius:8px;width:100%;max-width:800px;padding:3rem 2.5rem;position:relative;transform:translateY(20px);transition:transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 30px 60px rgba(0,0,0,0.9);}
+.modal-overlay.open .modal-box{transform:translateY(0);}
+.modal-close{position:absolute;top:20px;right:20px;color:var(--muted);cursor:pointer;transition:color 0.3s;z-index: 10;}
+.modal-close:hover{color:var(--gold);}
+
+.choice-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:1.5rem;margin-top:2.5rem;}
+.choice-card{background:var(--ink3);border:1px solid rgba(255,255,255,0.05);padding:2.5rem 1.5rem;text-align:center;border-radius:6px;transition:all 0.3s;cursor:pointer;text-decoration:none;color:var(--off);display:flex;flex-direction:column;align-items:center;gap:15px;}
+.choice-card:hover{border-color:var(--gold);background:var(--ink4);transform:translateY(-4px);box-shadow:0 15px 30px rgba(0,0,0,0.4);}
+.choice-card svg{width:42px;height:42px;color:var(--gold);}
+.choice-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.05em;color:var(--cream);}
+.choice-desc{font-size:0.85rem;color:var(--muted);line-height:1.5;font-weight:300;}
+
+.b-form{display:flex;flex-direction:column;gap:1.2rem;margin-top:2rem;}
+.b-group{display:flex;flex-direction:column;gap:6px;text-align:left;}
+.b-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--gold);}
+.b-input, .b-select{background:var(--ink3);border:1px solid rgba(255,255,255,0.1);color:var(--cream);padding:14px 16px;font-family:'Inter',sans-serif;font-size:0.95rem;border-radius:4px;outline:none;transition:border-color 0.3s;width:100%;}
+.b-input:focus, .b-select:focus{border-color:var(--gold);}
+.b-select{appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B8965A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 1rem center;background-size:1em;}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+
+/* --- CHAT DEMO STYLES (PREMIUM UPGRADE) --- */
+.chat-container{display:flex;flex-direction:column;height:500px;background:var(--ink2);border-radius:8px;overflow:hidden;}
+.chat-head{padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.03);display:flex;align-items:center;gap:12px;background:linear-gradient(to bottom, var(--ink3), var(--ink2));}
+.chat-avatar{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg, var(--gold-light), var(--gold));display:flex;align-items:center;justify-content:center;color:var(--ink);box-shadow: 0 4px 15px rgba(184,150,90,0.25);}
+.chat-title{font-size:14px;color:var(--cream);font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
+.chat-status{font-size:10px;color:#4ade80;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:4px;}
+.chat-status::before{content:'';width:6px;height:6px;background:#4ade80;border-radius:50%;display:inline-block;box-shadow:0 0 6px #4ade80;}
+.chat-body{flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:16px;}
+.chat-body::-webkit-scrollbar{display:none;}
+.msg{max-width:85%;padding:14px 18px;font-size:0.9rem;line-height:1.5;box-shadow: 0 4px 15px rgba(0,0,0,0.15);}
+.msg.bot{background:var(--ink3);color:var(--cream);align-self:flex-start;border-radius:16px 16px 16px 4px;border:1px solid rgba(255,255,255,.04);}
+.msg.user{background:linear-gradient(135deg, var(--gold), var(--gold-dark));color:var(--ink);align-self:flex-end;border-radius:16px 16px 4px 16px;font-weight:500;}
+.msg.bot strong{color: var(--gold-light); font-weight: 600;}
+.chat-suggestions { display:flex; gap:8px; overflow-x:auto; margin-top: 4px; padding-bottom: 5px; scrollbar-width:none; }
+.chat-suggestions::-webkit-scrollbar { display:none; }
+.chat-suggestions button { background:var(--ink4); border:1px solid rgba(184,150,90,.3); color:var(--gold); padding:8px 14px; border-radius:20px; font-size:0.75rem; white-space:nowrap; cursor:pointer; transition:all 0.3s; }
+.chat-suggestions button:hover { background:var(--gold); color:var(--ink); transform: translateY(-2px); }
+.typing .dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--gold);margin-right:3px;animation:typingBounce 1.4s infinite ease-in-out both;}
+.typing .dot:nth-child(1){animation-delay:-0.32s;}
+.typing .dot:nth-child(2){animation-delay:-0.16s;}
+@keyframes typingBounce{0%,80%,100%{transform:scale(0);} 40%{transform:scale(1);}}
+.chat-foot{padding:16px 20px;border-top:1px solid rgba(255,255,255,.03);background:var(--ink2);}
+.chat-input-wrapper { display:flex; align-items:center; background:var(--ink4); border:1px solid rgba(255,255,255,.1); border-radius:30px; padding:4px 4px 4px 16px; transition:border-color 0.3s, box-shadow 0.3s; }
+.chat-input-wrapper:focus-within { border-color:var(--gold); box-shadow: 0 0 15px rgba(184,150,90,0.1); }
+.chat-input{flex:1;background:transparent;border:none;color:var(--cream);font-size:0.9rem;outline:none;font-family:inherit;}
+.chat-send{width:38px;height:38px;border-radius:50%;background:var(--gold);color:var(--ink);display:flex;align-items:center;justify-content:center;transition:all .3s;border:none;cursor:pointer;flex-shrink:0;}
+.chat-send:hover{transform:scale(1.05);background:var(--gold-light);}
+
+@media(max-width:1100px){#hero{min-height:auto}.hero-left{padding:9rem 5vw 5rem}.team-grid{grid-template-columns:1fr 1fr}.bc.featured{grid-column:span 2}.info-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:800px){.srv-grid{grid-template-columns:1fr 1fr}.rev-grid{grid-template-columns:1fr}.why-wrap{grid-template-columns:1fr}.kids-wrap{grid-template-columns:1fr}.team-grid{grid-template-columns:1fr}.bc.featured{grid-column:span 1}.stats-row{flex-wrap:wrap}.stat{flex:0 0 50%}.stat:nth-child(2)::after{display:none}.sticky-cta{display:flex}.nav-links{display:none}.team-head{grid-template-columns:1fr}.services-intro{flex-direction:column;align-items:flex-start}.foot-top{flex-direction:column;align-items:flex-start}.info-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.choice-grid{grid-template-columns:1fr}.foot-bottom{flex-direction:column;align-items:flex-start;gap:1.5rem}.foot-nav{flex-wrap:wrap}.row-2{grid-template-columns:1fr}}
+</style>
+
+</head>
+<body>
+
+<nav id="main-nav">
+<a href="#" class="nav-logo">Lev<span>Barber</span></a>
+<ul class="nav-links">
+<li><a href="#services">Services</a></li>
+<li><a href="#team">Our Barbers</a></li>
+<li><a href="#reviews">Reviews</a></li>
+<li><a href="#info">Location</a></li>
+<li><a onclick="openBookingChoice(event)" class="nav-book">Reserve Now</a></li>
+</ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+<div class="hero-img-wrap">
+<img src="https://i.postimg.cc/MGMVcvwq/Screenshot-2026-03-30-13-30-50.png" alt="Premium Grooming Studio">
+</div>
+
+<div class="hero-left">
+<div class="hero-tag">
+<div class="hero-tag-line"></div>
+<span>Downtown District · 123 Demo Street</span>
+</div>
+<h1>The City's<br><em>Freshest</em><br>Fade.</h1>
+<p class="hero-desc">Expert cuts. Flawless <strong>skin fades</strong>. A studio that treats you like family the moment you walk through the door. Open until <strong>9 PM</strong> — because your time matters.</p>
+<div class="hero-btns">
+<a onclick="openBookingChoice(event)" class="btn-gold">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+Reserve Your Appointment
+</a>
+<a href="#team" class="btn-ghost">
+Meet the Team
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+</a>
+</div>
+<div class="hero-pills">
+<span class="pill">Walk-ins Welcome</span>
+<span class="pill">Open Until 9 PM</span>
+<span class="pill">Bilingual Service</span>
+<span class="pill">Kid Friendly</span>
+<span class="pill">Wheelchair Accessible</span>
+</div>
+</div>
+
+<div class="hero-social">
+<a href="#" onclick="openPromoModal(event)" title="Instagram">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+</a>
+<a href="#" onclick="openPromoModal(event)" title="Facebook">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a4 4 0 00-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 011-1h3z"/></svg>
+</a>
+</div>
+
+<div class="scroll-ind">
+<span>Scroll</span>
+<div class="scroll-line"></div>
+</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+<div class="ticker-inner">
+<span class="ticker-item"><span class="ticker-dot">—</span> Premium Grooming</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> Open Until 9 PM</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> Bilingual Team</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> Kid Friendly</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> Walk-ins Welcome</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> Expert Skin Fades</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> LevBarber Studio</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> Premium Grooming</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> Open Until 9 PM</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> Bilingual Team</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> Kid Friendly</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> Walk-ins Welcome</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> Expert Skin Fades</span>
+<span class="ticker-item"><span class="ticker-dot">—</span> LevBarber Studio</span>
+</div>
+</div>
+
+<!-- STATS -->
+<div id="stats">
+<div class="stats-row">
+<div class="stat r"><div class="stat-n">4.9 / 5.0</div><div class="stat-l">124 Google Reviews</div></div>
+<div class="stat r"><div class="stat-n">5</div><div class="stat-l">Expert Barbers</div></div>
+<div class="stat r"><div class="stat-n">9 PM</div><div class="stat-l">Closing Time (Mon-Sat)</div></div>
+<div class="stat r"><div class="stat-n">$30</div><div class="stat-l">Starting Price</div></div>
+</div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+<div class="services-intro">
+<div>
+<div class="s-label"><div class="s-label-line"></div><span>What We Do</span></div>
+<h2>Services &amp;<br><em>Pricing</em></h2>
+</div>
+<p>Every service is performed with precision and care. No rush, no compromises — just clean work, every single time.</p>
+</div>
+<div class="srv-grid">
+<div class="srv r">
+<svg class="srv-icon" viewBox="0 0 42 42" fill="none"><circle cx="21" cy="21" r="20" stroke="rgba(184,150,90,0.2)" stroke-width="1"/><path d="M14 28 L21 14 L28 28" stroke="#B8965A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="16" y1="24" x2="26" y2="24" stroke="#B8965A" stroke-width="1.5" stroke-linecap="round"/></svg>
+<div class="srv-name">Haircut</div>
+<div class="srv-desc">Classic precision cut shaped to your face structure, hair texture, and personal style. Consistent every visit.</div>
+<div class="srv-price">From $30</div>
+</div>
+<div class="srv r">
+<svg class="srv-icon" viewBox="0 0 42 42" fill="none"><circle cx="21" cy="21" r="20" stroke="rgba(184,150,90,0.2)" stroke-width="1"/><path d="M12 30 Q17 18 21 16 Q25 18 30 30" stroke="#B8965A" stroke-width="1.5" fill="none" stroke-linecap="round"/><line x1="21" y1="16" x2="21" y2="10" stroke="#B8965A" stroke-width="1.5" stroke-linecap="round"/><circle cx="21" cy="9" r="2" fill="#B8965A" opacity=".5"/></svg>
+<div class="srv-name">Skin Fade</div>
+<div class="srv-desc">Our signature. Surgical skin-to-hair transition that turns heads. Ask for David — he owns this cut.</div>
+<div class="srv-price">From $35</div>
+</div>
+<div class="srv r">
+<svg class="srv-icon" viewBox="0 0 42 42" fill="none"><circle cx="21" cy="21" r="20" stroke="rgba(184,150,90,0.2)" stroke-width="1"/><path d="M14 18 Q14 14 18 13 Q22 12 24 14 Q28 16 27 20 Q26 25 21 26 Q16 25 14 21 Z" stroke="#B8965A" stroke-width="1.5" fill="none"/><path d="M14 21 Q13 26 15 29 Q18 32 21 32 Q24 32 27 29 Q29 26 28 21" stroke="#B8965A" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+<div class="srv-name">Beard Trim</div>
+<div class="srv-desc">Hot towel. Straight razor. Sculpted lines. The kind of beard that makes people ask where you got it done.</div>
+<div class="srv-price">From $25</div>
+</div>
+<div class="srv r">
+<svg class="srv-icon" viewBox="0 0 42 42" fill="none"><circle cx="21" cy="21" r="20" stroke="rgba(184,150,90,0.2)" stroke-width="1"/><circle cx="21" cy="17" r="6" stroke="#B8965A" stroke-width="1.5" fill="none"/><path d="M12 31 Q12 25 21 24 Q30 25 30 31" stroke="#B8965A" stroke-width="1.5" fill="none" stroke-linecap="round"/><line x1="16" y1="31" x2="26" y2="31" stroke="#B8965A" stroke-width="1.5" stroke-linecap="round"/></svg>
+<div class="srv-name">Cut + Beard Combo</div>
+<div class="srv-desc">The full package. Fresh fade, shaped beard, crisp line-up. Leave looking like a different person.</div>
+<div class="srv-price">From $50</div>
+</div>
+<div class="srv r">
+<svg class="srv-icon" viewBox="0 0 42 42" fill="none"><circle cx="21" cy="21" r="20" stroke="rgba(184,150,90,0.2)" stroke-width="1"/><circle cx="21" cy="16" r="5" stroke="#B8965A" stroke-width="1.5" fill="none"/><path d="M13 30 Q13 24 21 23 Q29 24 29 30" stroke="#B8965A" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M8 16 Q10 10 14 12" stroke="#B8965A" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".6"/><path d="M34 16 Q32 10 28 12" stroke="#B8965A" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".6"/></svg>
+<div class="srv-name">Kids Cut</div>
+<div class="srv-desc">Patient barbers who've handled every type of kid. They leave with a great cut and a big smile.</div>
+<div class="srv-price">From $25</div>
+</div>
+<div class="srv r">
+<svg class="srv-icon" viewBox="0 0 42 42" fill="none"><circle cx="21" cy="21" r="20" stroke="rgba(184,150,90,0.2)" stroke-width="1"/><line x1="12" y1="21" x2="30" y2="21" stroke="#B8965A" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="16" x2="22" y2="16" stroke="#B8965A" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="26" x2="26" y2="26" stroke="#B8965A" stroke-width="1.5" stroke-linecap="round"/><circle cx="28" cy="16" r="2.5" stroke="#B8965A" stroke-width="1.2" fill="none"/></svg>
+<div class="srv-name">Design &amp; Line-Up</div>
+<div class="srv-desc">Custom graphics, crisp edges, and sharp line-ups. For those who want something that stands out.</div>
+<div class="srv-price">From $35</div>
+</div>
+</div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+<div class="team-head">
+<div>
+<div class="s-label"><div class="s-label-line"></div><span>Barber Spotlight</span></div>
+<h2>The Crew<br>Behind the<br><em>Magic</em></h2>
+</div>
+<p class="team-sub">You don't just get "a barber" at LevBarber — you pick your artist. Every name here has a specialty, a style, and a reputation built one cut at a time.</p>
+</div>
+
+<div class="team-grid">
+<!-- ALEX FEATURED -->
+<div class="bc featured r">
+<div class="bc-photo">
+<svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="a-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a1610"/><stop offset="100%" stop-color="#0e0d0b"/></linearGradient>
+<linearGradient id="a-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#B07540"/><stop offset="100%" stop-color="#8A5828"/></linearGradient>
+<radialGradient id="a-glow" cx="50%" cy="25%" r="55%"><stop offset="0%" stop-color="rgba(184,150,90,0.08)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+</defs>
+<rect width="400" height="560" fill="url(#a-bg)"/>
+<rect width="400" height="560" fill="url(#a-glow)"/>
+<rect x="80" y="345" width="240" height="230" rx="8" fill="#0e0c0a"/>
+<path d="M 155 345 L 200 392 L 245 345" fill="#080807"/>
+<path d="M 165 360 Q 200 382 235 360" stroke="#B8965A" stroke-width="2.2" fill="none" opacity=".65"/>
+<circle cx="200" cy="382" r="4" fill="#B8965A" opacity=".4"/>
+<rect x="178" y="278" width="44" height="74" rx="9" fill="url(#a-skin)"/>
+<ellipse cx="200" cy="208" rx="90" ry="100" fill="url(#a-skin)"/>
+<ellipse cx="200" cy="125" rx="85" ry="44" fill="#100c07"/>
+<path d="M 114 192 Q 110 162 114 148 Q 126 114 152 107 Q 170 100 200 99 Q 230 100 248 107 Q 274 114 286 148 Q 290 162 286 192" fill="#100c07"/>
+<path d="M 114 192 Q 111 212 114 228 Q 120 196 127 178 Q 118 152 116 162 Z" fill="#070503" opacity=".95"/>
+<path d="M 286 192 Q 289 212 286 228 Q 280 196 273 178 Q 282 152 284 162 Z" fill="#070503" opacity=".95"/>
+<path d="M 166 190 Q 178 184 192 187" stroke="#0a0704" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+<path d="M 208 187 Q 222 184 234 190" stroke="#0a0704" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+<ellipse cx="180" cy="203" rx="13" ry="10" fill="#0c0906"/>
+<ellipse cx="220" cy="203" rx="13" ry="10" fill="#0c0906"/>
+<circle cx="184" cy="200" r="3.5" fill="#fff" opacity=".12"/>
+<circle cx="224" cy="200" r="3.5" fill="#fff" opacity=".12"/>
+<path d="M 196 215 Q 191 228 187 233 Q 193 238 200 236 Q 207 238 213 233 Q 209 228 204 215" stroke="#7a4a22" stroke-width="1.5" fill="none" opacity=".55"/>
+<path d="M 183 254 Q 200 262 217 254" stroke="#8a5530" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M 183 254 Q 200 250 217 254" stroke="#8a5530" stroke-width="1.5" fill="none" opacity=".4"/>
+<ellipse cx="112" cy="214" rx="11" ry="18" fill="url(#a-skin)"/>
+<ellipse cx="288" cy="214" rx="11" ry="18" fill="url(#a-skin)"/>
+<circle cx="288" cy="220" r="5" fill="none" stroke="#B8965A" stroke-width="2" opacity=".75"/>
+<path d="M 130 245 Q 128 265 134 280 Q 150 302 200 306 Q 250 302 266 280 Q 272 265 270 245 Q 252 256 200 260 Q 148 256 130 245 Z" fill="#0c0906" opacity=".55"/>
+<rect x="0" y="500" width="400" height="60" fill="rgba(184,150,90,0.06)"/>
+<rect x="0" y="500" width="400" height="1" fill="rgba(184,150,90,0.15)"/>
+<text x="22" y="534" font-family="'Bebas Neue', sans-serif" font-size="28" fill="#B8965A" letter-spacing="4">ALEX</text>
+<text x="240" y="530" font-family="sans-serif" font-size="9" fill="rgba(184,150,90,0.4)" letter-spacing="2" text-anchor="middle">MOST REQUESTED</text>
+</svg>
+</div>
+<div class="bc-info">
+<div class="bc-name">Alex</div>
+<div class="bc-role">Lead Barber · Most Requested</div>
+<p class="bc-desc">When people say they want the best fade in the city, they end up in Alex's chair. His skin fades are surgical, his tapers are seamless, and his energy makes every client feel right at home. Fully bilingual — bring the whole family.</p>
+<div class="bc-tags">
+<span class="bc-tag">Fades &amp; Tapers</span>
+<span class="bc-tag">Bilingual</span>
+<span class="bc-tag">Line-Ups</span>
+</div>
+<div class="bc-social">
+<a href="#" onclick="openPromoModal(event)">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+@alex_blends
+</a>
+</div>
+<br>
+<a onclick="openBookingChoice(event)" class="btn-gold" style="font-size:.75rem;padding:.75rem 1.6rem;margin-top:.5rem">Reserve with Alex</a>
+</div>
+</div>
+
+<!-- MARCUS -->
+<div class="bc r">
+<div class="bc-photo">
+<svg viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="f-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161410"/><stop offset="100%" stop-color="#0e0d0b"/></linearGradient>
+<linearGradient id="f-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C09060"/><stop offset="100%" stop-color="#9A7040"/></linearGradient>
+</defs>
+<rect width="300" height="380" fill="url(#f-bg)"/>
+<rect x="55" y="240" width="190" height="150" rx="6" fill="#0e0c09"/>
+<path d="M 112 240 L 150 278 L 188 240" fill="#080806"/>
+<rect x="90" y="262" width="46" height="24" rx="2" fill="rgba(184,150,90,0.08)" stroke="rgba(184,150,90,0.18)" stroke-width="1"/>
+<text x="113" y="278" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#B8965A" letter-spacing="1">OWNER</text>
+<rect x="133" y="190" width="34" height="56" rx="7" fill="url(#f-skin)"/>
+<ellipse cx="150" cy="138" rx="72" ry="80" fill="url(#f-skin)"/>
+<ellipse cx="150" cy="74" rx="68" ry="34" fill="#0a0806"/>
+<path d="M 82 122 Q 80 98 84 86 Q 95 62 120 56 Q 134 50 150 49 Q 166 50 180 56 Q 205 62 216 86 Q 220 98 218 122" fill="#0a0806"/>
+<path d="M 94 80 Q 104 73 114 78 Q 124 73 134 78" stroke="rgba(255,255,255,0.05)" stroke-width="2.5" fill="none"/>
+<path d="M 106 89 Q 116 82 126 87 Q 136 82 146 87" stroke="rgba(255,255,255,0.05)" stroke-width="2.5" fill="none"/>
+<path d="M 82 122 Q 80 138 82 152 Q 87 128 92 114 Z" fill="#060504" opacity=".9"/>
+<path d="M 218 122 Q 220 138 218 152 Q 213 128 208 114 Z" fill="#060504" opacity=".9"/>
+<path d="M 120 126 Q 132 119 145 122" stroke="#0a0806" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M 155 122 Q 168 119 180 126" stroke="#0a0806" stroke-width="3" fill="none" stroke-linecap="round"/>
+<ellipse cx="134" cy="139" rx="12" ry="9" fill="#0a0806"/>
+<ellipse cx="166" cy="139" rx="12" ry="9" fill="#0a0806"/>
+<circle cx="137" cy="137" r="3" fill="#fff" opacity=".1"/>
+<circle cx="169" cy="137" r="3" fill="#fff" opacity=".1"/>
+<path d="M 146 150 Q 142 161 139 166 Q 145 170 150 168 Q 155 170 161 166 Q 158 161 154 150" stroke="#7a5030" stroke-width="1.3" fill="none" opacity=".55"/>
+<path d="M 98 162 Q 96 182 102 200 Q 116 220 150 224 Q 184 220 198 200 Q 204 182 202 162 Q 186 172 150 174 Q 114 172 98 162 Z" fill="#0c0a06"/>
+<path d="M 130 162 Q 140 168 150 166 Q 160 168 170 162" stroke="#0c0a06" stroke-width="7" fill="none" stroke-linecap="round"/>
+<ellipse cx="80" cy="148" rx="9" ry="15" fill="url(#f-skin)"/>
+<ellipse cx="220" cy="148" rx="9" ry="15" fill="url(#f-skin)"/>
+<rect x="0" y="340" width="300" height="40" fill="rgba(184,150,90,0.05)"/>
+<rect x="0" y="340" width="300" height="1" fill="rgba(184,150,90,0.12)"/>
+<text x="16" y="367" font-family="'Bebas Neue', sans-serif" font-size="20" fill="#B8965A" letter-spacing="3">MARCUS</text>
+<text x="150" y="365" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(184,150,90,0.4)" letter-spacing="1.5">OWNER · MANAGER</text>
+</svg>
+</div>
+<div class="bc-info">
+<div class="bc-name">Marcus</div>
+<div class="bc-role">Owner · Manager</div>
+<p class="bc-desc">Built LevBarber Studio from the ground up. Marcus's standard is simple: every client walks out looking better than they imagined.</p>
+<div class="bc-tags"><span class="bc-tag">Shop Owner</span><span class="bc-tag">All Styles</span></div>
+<div class="bc-social">
+<a href="#" onclick="openPromoModal(event)">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+@marcus_cuts
+</a>
+</div>
+</div>
+</div>
+
+<!-- DAVID -->
+<div class="bc r">
+<div class="bc-photo">
+<svg viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="m-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141210"/><stop offset="100%" stop-color="#0c0b09"/></linearGradient>
+<linearGradient id="m-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D4A87A"/><stop offset="100%" stop-color="#A87848"/></linearGradient>
+</defs>
+<rect width="300" height="380" fill="url(#m-bg)"/>
+<rect x="55" y="242" width="190" height="148" rx="6" fill="#111"/>
+<path d="M 112 242 L 150 280 L 188 242" fill="#090909"/>
+<rect x="133" y="190" width="34" height="58" rx="7" fill="url(#m-skin)"/>
+<ellipse cx="150" cy="138" rx="74" ry="83" fill="url(#m-skin)"/>
+<ellipse cx="150" cy="70" rx="68" ry="28" fill="#0c0905"/>
+<path d="M 80 120 Q 78 96 82 84 Q 93 60 118 53 Q 132 47 150 46 Q 168 47 182 53 Q 207 60 218 84 Q 222 96 220 120" fill="#0c0905"/>
+<path d="M 80 120 Q 78 138 80 155 Q 85 128 90 113 Z" fill="#080604" opacity=".96"/>
+<path d="M 220 120 Q 222 138 220 155 Q 215 128 210 113 Z" fill="#080604" opacity=".96"/>
+<path d="M 118 127 Q 130 120 144 124" stroke="#090704" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+<path d="M 156 124 Q 170 120 182 127" stroke="#090704" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+<ellipse cx="133" cy="141" rx="13" ry="10" fill="#080602"/>
+<ellipse cx="167" cy="141" rx="13" ry="10" fill="#080602"/>
+<circle cx="137" cy="138" r="3" fill="#fff" opacity=".1"/>
+<circle cx="171" cy="138" r="3" fill="#fff" opacity=".1"/>
+<path d="M 146 152 Q 142 163 138 168 Q 144 173 150 171 Q 156 173 162 168 Q 158 163 154 152" stroke="#906040" stroke-width="1.3" fill="none" opacity=".5"/>
+<path d="M 132 186 Q 141 195 150 193 Q 159 195 168 186" stroke="#0c0906" stroke-width="5.5" fill="none" stroke-linecap="round" opacity=".8"/>
+<path d="M 134 180 Q 150 187 166 180" stroke="#9a6840" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+<ellipse cx="78" cy="148" rx="9" ry="16" fill="url(#m-skin)"/>
+<ellipse cx="222" cy="148" rx="9" ry="16" fill="url(#m-skin)"/>
+<rect x="0" y="340" width="300" height="40" fill="rgba(184,150,90,0.05)"/>
+<rect x="0" y="340" width="300" height="1" fill="rgba(184,150,90,0.12)"/>
+<text x="16" y="367" font-family="'Bebas Neue', sans-serif" font-size="20" fill="#B8965A" letter-spacing="3">DAVID</text>
+<text x="150" y="365" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(184,150,90,0.4)" letter-spacing="1.5">FADE SPECIALIST</text>
+</svg>
+</div>
+<div class="bc-info">
+<div class="bc-name">David</div>
+<div class="bc-role">Fade Specialist</div>
+<p class="bc-desc">Mid-skin fades are David's art form. Zero patchiness, perfect blend, every single time. Book him for the cleanest fade of your life.</p>
+<div class="bc-tags"><span class="bc-tag">Mid-Skin Fade</span><span class="bc-tag">Precision Cuts</span></div>
+</div>
+</div>
+
+<!-- CHRIS -->
+<div class="bc r">
+<div class="bc-photo">
+<svg viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="d-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141210"/><stop offset="100%" stop-color="#0c0b09"/></linearGradient>
+<linearGradient id="d-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#A8784A"/><stop offset="100%" stop-color="#7A5230"/></linearGradient>
+</defs>
+<rect width="300" height="380" fill="url(#d-bg)"/>
+<rect x="56" y="240" width="188" height="150" rx="6" fill="#0f0d0a"/>
+<path d="M 112 240 L 150 278 L 188 240" fill="#0a0907"/>
+<rect x="132" y="190" width="36" height="56" rx="7" fill="url(#d-skin)"/>
+<ellipse cx="150" cy="135" rx="72" ry="84" fill="url(#d-skin)"/>
+<ellipse cx="150" cy="66" rx="66" ry="30" fill="#0c0907"/>
+<path d="M 82 117 Q 80 92 85 80 Q 96 57 122 51 Q 136 46 150 45 Q 164 46 178 51 Q 204 57 215 80 Q 220 92 218 117" fill="#0c0907"/>
+<path d="M 108 64 Q 114 56 122 61 Q 128 55 136 60" stroke="#070504" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+<path d="M 136 56 Q 142 48 150 53 Q 156 48 164 53" stroke="#070504" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+<path d="M 162 60 Q 168 54 175 59 Q 180 53 186 57" stroke="#070504" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+<path d="M 82 117 Q 80 135 82 150 Q 87 124 92 110 Z" fill="#060504" opacity=".9"/>
+<path d="M 218 117 Q 220 135 218 150 Q 213 124 208 110 Z" fill="#060504" opacity=".9"/>
+<path d="M 118 124 Q 130 117 144 121" stroke="#090704" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M 156 121 Q 170 117 182 124" stroke="#090704" stroke-width="3" fill="none" stroke-linecap="round"/>
+<ellipse cx="132" cy="137" rx="12" ry="9.5" fill="#0a0805"/>
+<ellipse cx="168" cy="137" rx="12" ry="9.5" fill="#0a0805"/>
+<circle cx="135" cy="134" r="3" fill="#fff" opacity=".1"/>
+<circle cx="171" cy="134" r="3" fill="#fff" opacity=".1"/>
+<path d="M 146 148 Q 142 158 139 163 Q 145 168 150 166 Q 155 168 161 163 Q 158 158 154 148" stroke="#7a5030" stroke-width="1.2" fill="none" opacity=".5"/>
+<path d="M 132 178 Q 150 190 168 178" stroke="#9a6840" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M 100 158 Q 98 174 104 188 Q 118 202 150 205 Q 182 202 196 188 Q 202 174 200 158 Q 182 166 150 168 Q 118 166 100 158 Z" fill="#0c0906" opacity=".45"/>
+<ellipse cx="80" cy="145" rx="9" ry="15" fill="url(#d-skin)"/>
+<ellipse cx="220" cy="145" rx="9" ry="15" fill="url(#d-skin)"/>
+<rect x="0" y="340" width="300" height="40" fill="rgba(184,150,90,0.05)"/>
+<rect x="0" y="340" width="300" height="1" fill="rgba(184,150,90,0.12)"/>
+<text x="16" y="367" font-family="'Bebas Neue', sans-serif" font-size="20" fill="#B8965A" letter-spacing="3">CHRIS</text>
+<text x="150" y="365" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(184,150,90,0.4)" letter-spacing="1.5">STYLE CONSULTANT</text>
+</svg>
+</div>
+<div class="bc-info">
+<div class="bc-name">Chris</div>
+<div class="bc-role">Style Consultant</div>
+<p class="bc-desc">Not sure what style fits your face? Chris figures it out before touching the clippers. Personalized advice that actually works.</p>
+<div class="bc-tags"><span class="bc-tag">Styling Advice</span><span class="bc-tag">Tapers</span></div>
+</div>
+</div>
+
+<!-- JAMES -->
+<div class="bc r">
+<div class="bc-photo">
+<svg viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="lx-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141210"/><stop offset="100%" stop-color="#0c0b09"/></linearGradient>
+<linearGradient id="lx-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E0B888"/><stop offset="100%" stop-color="#B88858"/></linearGradient>
+</defs>
+<rect width="300" height="380" fill="url(#lx-bg)"/>
+<rect x="56" y="240" width="188" height="150" rx="6" fill="#111"/>
+<path d="M 112 240 L 150 280 L 188 240" fill="#090909"/>
+<rect x="133" y="188" width="34" height="58" rx="7" fill="url(#lx-skin)"/>
+<ellipse cx="150" cy="135" rx="71" ry="82" fill="url(#lx-skin)"/>
+<ellipse cx="150" cy="70" rx="66" ry="30" fill="#141008"/>
+<path d="M 83 118 Q 81 93 86 80 Q 97 57 122 51 Q 136 46 150 45 Q 164 46 178 51 Q 203 57 214 80 Q 219 93 217 118" fill="#141008"/>
+<path d="M 116 70 Q 124 62 133 67" stroke="#0a0806" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M 138 62 Q 148 55 158 60" stroke="#0a0806" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M 162 66 Q 170 60 178 65" stroke="#0a0806" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M 83 118 Q 81 136 83 152 Q 88 124 93 110 Z" fill="#0a0806" opacity=".9"/>
+<path d="M 217 118 Q 219 136 217 152 Q 212 124 207 110 Z" fill="#0a0806" opacity=".9"/>
+<path d="M 118 124 Q 130 117 144 121" stroke="#0e0a06" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M 156 121 Q 170 117 182 124" stroke="#0e0a06" stroke-width="3" fill="none" stroke-linecap="round"/>
+<ellipse cx="133" cy="137" rx="12" ry="9" fill="#0e0a06"/>
+<ellipse cx="167" cy="137" rx="12" ry="9" fill="#0e0a06"/>
+<circle cx="136" cy="134" r="3" fill="#fff" opacity=".12"/>
+<circle cx="170" cy="134" r="3" fill="#fff" opacity=".12"/>
+<path d="M 146 148 Q 143 158 140 163 Q 146 167 150 165 Q 154 167 160 163 Q 157 158 154 148" stroke="#a07848" stroke-width="1.2" fill="none" opacity=".5"/>
+<path d="M 135 179 Q 150 186 165 179" stroke="#b08050" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+<path d="M 105 160 Q 104 174 110 186 Q 123 198 150 200 Q 177 198 190 186 Q 196 174 195 160 Q 178 167 150 169 Q 122 167 105 160 Z" fill="#0e0a06" opacity=".38"/>
+<ellipse cx="81" cy="144" rx="9" ry="15" fill="url(#lx-skin)"/>
+<ellipse cx="219" cy="144" rx="9" ry="15" fill="url(#lx-skin)"/>
+<rect x="0" y="340" width="300" height="40" fill="rgba(184,150,90,0.05)"/>
+<rect x="0" y="340" width="300" height="1" fill="rgba(184,150,90,0.12)"/>
+<text x="16" y="367" font-family="'Bebas Neue', sans-serif" font-size="20" fill="#B8965A" letter-spacing="3">JAMES</text>
+<text x="150" y="365" text-anchor="middle" font-family="sans-serif" font-size="8.5" fill="rgba(184,150,90,0.4)" letter-spacing="1.5">BARBER</text>
+</svg>
+</div>
+<div class="bc-info">
+<div class="bc-name">James</div>
+<div class="bc-role">Barber</div>
+<p class="bc-desc">Versatile, consistent, always delivering. Book James for a no-wait, no-surprise cut that looks exactly how you envisioned.</p>
+<div class="bc-tags"><span class="bc-tag">All-Around</span><span class="bc-tag">Versatile</span></div>
+<div class="bc-social">
+<a href="#" onclick="openPromoModal(event)">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+@james_fresh
+</a>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- WHY -->
+
+<section id="why">
+<div class="s-label"><div class="s-label-line"></div><span>Why LevBarber</span></div>
+<h2>More Than<br>a <em>Haircut</em></h2>
+<div class="why-wrap">
+<div class="why-list">
+<div class="why-item r">
+<div class="why-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+<div><div class="why-t">Open Until 9 PM</div>
+<p class="why-d">Work late? No problem. We keep the shop open until 9 — because great cuts shouldn't require taking a day off.</p></div>
+</div>
+<div class="why-item r">
+<div class="why-ico"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+<div><div class="why-t">Real Hospitality</div>
+<p class="why-d">You get offered water when you walk in. Clean shop, calm vibe. Small details that add up to a completely different experience.</p></div>
+</div>
+<div class="why-item r">
+<div class="why-ico"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></div>
+<div><div class="why-t">Book in 60 Seconds</div>
+<p class="why-d">Pick your barber, pick your time — done. No phone tag, no waiting. Walk in exactly when you're supposed to.</p></div>
+</div>
+<div class="why-item r">
+<div class="why-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+<div><div class="why-t">Wheelchair Accessible</div>
+<p class="why-d">Accessible parking and ADA-compliant entrance. LevBarber is built for everyone — no exceptions, no workarounds.</p></div>
+</div>
+</div>
+<div class="bilingual r">
+<div class="bilingual-flag">
+<svg viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+<rect x="0" y="0" width="30" height="60" fill="#006847"/>
+<rect x="30" y="0" width="30" height="60" fill="#fff"/>
+<rect x="60" y="0" width="30" height="60" fill="#CE1126"/>
+<ellipse cx="45" cy="30" rx="6" ry="9" fill="#8B6914" opacity=".65"/>
+</svg>
+</div>
+<div class="bilingual-title">Hablamos<br>Español</div>
+<div class="bilingual-sub">We speak your language</div>
+<p>The local Latino community is part of our family. <strong>Alex and our bilingual team</strong> make sure every client is fully understood — not just nodding along.<br><br>Whether you want a <strong>corte clásico</strong> or a full fade con diseño, there's no barrier — just a great cut.</p>
+<br>
+<a onclick="openBookingChoice(event)" class="btn-gold" style="font-size:.78rem; cursor:pointer;">Reservar Cita</a>
+</div>
+</div>
+</section>
+
+<!-- REVIEWS -->
+
+<section id="reviews">
+<div class="s-label"><div class="s-label-line"></div><span>Google Reviews</span></div>
+<h2>What Our Clients<br><em>Say</em></h2>
+<div class="rev-grid">
+<div class="rev feat r">
+<div class="rev-q">"</div>
+<p class="rev-txt">Honestly best experience I’ve ever had at a barber, I called for a walk in and was immediately met with amazing customer service. Then as I was waiting I was reassured I would be up soon to get a cut and was even offered a bottle of water.</p>
+<div class="rev-author"><div class="rev-av"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(184,150,90,0.35)" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div><div class="rev-name">Jacob</div><div class="rev-stars">★★★★★</div></div></div>
+</div>
+<div class="rev r">
+<div class="rev-q">"</div>
+<p class="rev-txt">Alex at LevBarber was amazing. Nice guy with great skill. He went the extra mile without me asking and was trying to make sure my cut was 100% what I wanted. Highly recommend him to anyone that wants a no bullshit barber that is honest.</p>
+<div class="rev-author"><div class="rev-av"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(184,150,90,0.35)" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div><div class="rev-name">Steve B.</div><div class="rev-stars">★★★★★</div></div></div>
+</div>
+<div class="rev r">
+<div class="rev-q">"</div>
+<p class="rev-txt">Best Shop In Town Great Haircut and Chill vibes. I recommend you all to check him out the manager Marcus the barber 🙌</p>
+<div class="rev-author"><div class="rev-av"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(184,150,90,0.35)" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div><div class="rev-name">Google User</div><div class="rev-stars">★★★★★</div></div></div>
+</div>
+</div>
+</section>
+
+<!-- KIDS -->
+
+<section id="kids">
+<div class="kids-wrap">
+<div class="kids-visual r">
+<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0">
+<defs>
+<linearGradient id="k-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141210"/><stop offset="100%" stop-color="#0a0908"/></linearGradient>
+<linearGradient id="k-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D4A070"/><stop offset="100%" stop-color="#A87848"/></linearGradient>
+<linearGradient id="k-bskin" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C89060"/><stop offset="100%" stop-color="#A07040"/></linearGradient>
+<radialGradient id="k-glow" cx="50%" cy="35%" r="50%"><stop offset="0%" stop-color="rgba(184,150,90,0.06)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+</defs>
+<rect width="400" height="500" fill="url(#k-bg)"/>
+<rect width="400" height="500" fill="url(#k-glow)"/>
+<rect x="100" y="316" width="200" height="14" rx="4" fill="#181410"/>
+<rect x="118" y="294" width="164" height="28" rx="5" fill="#161210"/>
+<rect x="108" y="210" width="184" height="92" rx="9" fill="#121008"/>
+<path d="M 78 278 Q 70 268 74 238 Q 108 300 200 306 Q 292 300 326 238 Q 330 268 322 278 Q 282 316 200 320 Q 118 316 78 278 Z" fill="#0d0c0a"/>
+<path d="M 290 210 Q 312 192 308 165 Q 298 150 288 155" stroke="url(#k-bskin)" stroke-width="22" fill="none" stroke-linecap="round"/>
+<rect x="272" y="146" width="24" height="12" rx="4" fill="#242220"/>
+<rect x="184" y="160" width="32" height="56" rx="7" fill="url(#k-skin)"/>
+<ellipse cx="200" cy="115" rx="66" ry="72" fill="url(#k-skin)"/>
+<ellipse cx="200" cy="58" rx="61" ry="28" fill="#0a0806"/>
+<path d="M 137 98 Q 135 78 139 67 Q 150 48 172 43 Q 184 39 200 38 Q 216 39 228 43 Q 250 48 261 67 Q 265 78 263 98" fill="#0a0806"/>
+<path d="M 137 98 Q 135 113 137 127 Q 141 106 146 95 Z" fill="#070604" opacity=".92"/>
+<path d="M 263 98 Q 265 113 263 127 Q 259 106 254 95 Z" fill="#070604" opacity=".92"/>
+<ellipse cx="181" cy="112" rx="13" ry="11" fill="#0a0706"/>
+<ellipse cx="219" cy="112" rx="13" ry="11" fill="#0a0706"/>
+<circle cx="185" cy="108" r="4" fill="#fff" opacity=".2"/>
+<circle cx="223" cy="108" r="4" fill="#fff" opacity=".2"/>
+<ellipse cx="162" cy="128" rx="13" ry="8" fill="#d07050" opacity=".1"/>
+<ellipse cx="238" cy="128" rx="13" ry="8" fill="#d07050" opacity=".1"/>
+<ellipse cx="200" cy="124" rx="8" ry="5.5" fill="none" stroke="#9a6838" stroke-width="1" opacity=".38"/>
+<path d="M 178 142 Q 200 158 222 142" stroke="#a07040" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+<ellipse cx="136" cy="120" rx="10" ry="14" fill="url(#k-skin)"/>
+<ellipse cx="264" cy="120" rx="10" ry="14" fill="url(#k-skin)"/>
+<rect x="0" y="0" width="400" height="2" fill="rgba(184,150,90,0.12)"/>
+<rect x="0" y="458" width="400" height="42" fill="rgba(184,150,90,0.05)"/>
+<rect x="0" y="458" width="400" height="1" fill="rgba(184,150,90,0.12)"/>
+<text x="20" y="484" font-family="'Bebas Neue', sans-serif" font-size="22" fill="#B8965A" letter-spacing="4">KID FRIENDLY</text>
+</svg>
+</div>
+<div class="kids-content">
+<div class="s-label"><div class="s-label-line"></div><span>For Families</span></div>
+<h2>Great Cuts.<br><em>Patient Hands.</em></h2>
+<p>Kids fidget. Kids squirm. Kids refuse to sit still for more than 10 seconds — and our barbers <strong>handle all of it</strong>, every time, without losing focus or quality.</p>
+<p>LevBarber is where local families bring their kids because <strong>we make it a good memory</strong>, not a battle. Dad gets his fade. Junior gets his first real cut. Same shop, same quality.</p>
+<div class="kids-badges">
+<span class="k-badge">All Ages Welcome</span>
+<span class="k-badge">Patient Barbers</span>
+<span class="k-badge">Family Bookings</span>
+</div>
+<br><br>
+<a onclick="openBookingChoice(event)" class="btn-gold" style="cursor:pointer;">
+  <span>Reserve a Family Appointment</span>
+</a>
+</div>
+</div>
+</section>
+
+<!-- PREMIUM END SECTIONS -->
+
+<!-- CTA -->
+<section id="cta">
+  <div class="s-label" style="justify-content:center"><div class="s-label-line"></div><span>Ready?</span><div class="s-label-line"></div></div>
+  <h2 class="r">Your Next <em>Fresh Look</em><br>Is One Click Away</h2>
+  <p class="r">Skip the calls. Pick your barber, pick your time. Show up looking fresh.</p>
+  
+  <div class="r" style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+    <a onclick="openBookingChoice(event)" class="btn-gold" style="font-size:.88rem;padding:1.1rem 2.8rem; cursor:pointer;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Reserve Your Appointment</span>
+    </a>
+  </div>
+</section>
+
+<!-- INFO / LOCATION -->
+<section id="info">
+  <div class="s-label"><div class="s-label-line"></div><span>Find Us</span></div>
+  <h2>Come <em>Through</em></h2>
+  <div class="info-grid">
+    <div class="info-card r">
+      <div class="info-lbl"><span>Address</span></div>
+      <div class="info-val"><strong>LevBarber Studio</strong>123 Demo Street<br>Web City, 99999</div>
+    </div>
+    <div class="info-card r">
+      <div class="info-lbl"><span>Hours</span></div>
+      <div class="info-val">
+        <strong>Mon – Wed</strong>9:30 AM – 9:00 PM<br>
+        <strong>Thursday</strong>10:30 AM – 9:00 PM<br>
+        <strong>Fri – Sat</strong>9:30 AM – 9:00 PM<br>
+        <strong>Sunday</strong>10:30 AM – 6:30 PM
+      </div>
+    </div>
+    <div class="info-card r">
+      <div class="info-lbl"><span>Contact</span></div>
+      <div class="info-val"><strong>(555) 000-0000</strong><span>Walk-ins welcome<br>subject to availability</span></div>
+    </div>
+    <div class="info-card r">
+      <div class="info-lbl"><span>Access</span></div>
+      <div class="info-val"><strong>Fully Accessible</strong>Wheelchair parking<br>ADA entrance<br>Hablamos Español</div>
+    </div>
+  </div>
+
+  <!-- GOOGLE MAPS INTEGRATION (Placeholder pour démo) -->
+  <div class="map-wrap r">
+    <iframe src="https://maps.google.com/maps?q=New%20York&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <a href="#" class="map-btn">
+      <span>Get Directions</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-top">
+    <div>
+      <div class="foot-logo r">Lev<span>Barber</span></div>
+      <div class="agency-sig r" style="text-align: left; margin-top: 15px; border: none; padding: 0;">
+        Powered by <a onclick="openPromoModal(event)" style="cursor:pointer;">LevelUp Ecosystem</a>
+      </div>
+    </div>
+    
+    <div class="foot-social r">
+      <a href="#" onclick="openPromoModal(event)" title="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="#" onclick="openPromoModal(event)" title="Facebook">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a4 4 0 00-4 4v3H8v4h3v8h4v-8h3l1-4h-4V6a1 1 0 011-1h3z"/></svg>
+      </a>
+    </div>
+  </div>
+  
+  <div class="foot-bottom">
+    <div class="foot-copy">123 Demo Street, Web City · © 2026 LevBarber Studio Demo</div>
+    <ul class="foot-nav">
+      <li><a href="#services"><span>Services</span></a></li>
+      <li><a href="#team"><span>Team</span></a></li>
+      <li><a href="#reviews"><span>Reviews</span></a></li>
+    </ul>
+  </div>
+</footer>
+
+<a onclick="openBookingChoice(event)" class="sticky-cta" style="cursor:pointer;"><span>Reserve Your Appointment</span></a>
+
+
+<!-- ═══ BOOKING & CHAT MODALS ═══ -->
+
+<!-- 1. Modal de Choix (Booking) - 3 Options now -->
+<div id="booking-choice" class="modal-overlay" onclick="if(event.target===this) closeBookingChoice()">
+  <div class="modal-box" style="max-width: 850px;">
+    <button class="modal-close" onclick="closeBookingChoice()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <div class="s-label" style="justify-content:center"><div class="s-label-line"></div><span>How to book</span><div class="s-label-line"></div></div>
+    <h2 style="text-align:center; font-size:2.8rem; margin-top:5px; margin-bottom: 20px;">Choose Your <em>Method</em></h2>
+    
+    <div class="choice-grid">
+      <!-- Choix 1: Booksy (Lien désactivé pour la démo) -->
+      <a href="#" class="choice-card" onclick="openPromoModal(event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div class="choice-title">Booksy</div>
+        <div class="choice-desc">Instant confirmation. See full schedules and real-time availability.</div>
+      </a>
+      
+      <!-- Choix 2: Site Web Form -->
+      <div class="choice-card" onclick="openDirectBook()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <div class="choice-title"><span>Direct Request</span></div>
+        <div class="choice-desc">Fill out a quick form here. We will text you back to confirm your spot.</div>
+      </div>
+
+      <!-- Choix 3: AI Chat / Call Trap -->
+      <div class="choice-card" onclick="openChatModal(event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <div class="choice-title"><span>AI Assistant</span></div>
+        <div class="choice-desc">Chat with our intelligent virtual assistant to book or ask questions.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Modal Formulaire VIP (Trap -> Promo) -->
+<div id="direct-book" class="modal-overlay" onclick="if(event.target===this) closeDirectBook()">
+  <div class="modal-box" style="max-width: 600px;">
+    <button class="modal-close" onclick="closeDirectBook()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <div class="s-label"><div class="s-label-line"></div><span>VIP Request</span></div>
+    <h2 style="font-size:2.4rem; margin-top:5px;">Reserve <em>Directly</em></h2>
+    <p style="color:var(--muted); font-size:0.85rem; margin-bottom: 20px;">Send us your details and we will text you shortly to confirm the appointment.</p>
+    
+    <form class="b-form" onsubmit="submitDirectBook(event)">
+      <div class="row-2">
+        <div class="b-group">
+          <label class="b-label">Full Name</label>
+          <input type="text" class="b-input" required placeholder="John Doe">
+        </div>
+        <div class="b-group">
+          <label class="b-label">Phone Number</label>
+          <input type="tel" class="b-input" required placeholder="(555) 000-0000">
+        </div>
+      </div>
+      
+      <div class="row-2">
+        <div class="b-group">
+          <label class="b-label">Requested Date</label>
+          <input type="date" class="b-input" required>
+        </div>
+        <div class="b-group">
+          <label class="b-label">Preferred Time</label>
+          <select class="b-select" required>
+            <option value="">Select Time...</option>
+            <option>10:00 AM - 12:00 PM</option>
+            <option>12:00 PM - 04:00 PM</option>
+            <option>04:00 PM - 09:00 PM</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="b-group">
+          <label class="b-label">Barber</label>
+          <select class="b-select">
+            <option value="Any">Anyone Available</option>
+            <option value="Alex">Alex</option>
+            <option value="Marcus">Marcus</option>
+            <option value="David">David</option>
+            <option value="Chris">Chris</option>
+            <option value="James">James</option>
+          </select>
+        </div>
+        <div class="b-group">
+          <label class="b-label">Service</label>
+          <select class="b-select" required>
+            <option value="">Select Service...</option>
+            <option>Haircut Only</option>
+            <option>Skin Fade</option>
+            <option>Haircut + Beard Combo</option>
+            <option>Beard Trim Only</option>
+            <option>Kids Cut</option>
+            <option>Line-Up / Design</option>
+          </select>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn-gold" style="justify-content:center; margin-top: 15px; padding: 1.2rem; cursor:pointer;">
+        <span class="en-text">Send Reservation Request</span><span class="es-text">Enviar Solicitud</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- 3. Modal de Chat AI Promotionnel (Trap -> Promo) -->
+<div id="chat-modal" class="modal-overlay" onclick="if(event.target===this) closeChatModal()">
+  <div class="modal-box" style="padding: 0; overflow: hidden; max-width: 440px; border: 1px solid rgba(184,150,90,0.4); border-radius: 16px;">
+    <div class="chat-container">
+      <div class="chat-head">
+        <div class="chat-avatar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--ink)">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="chat-title">LevBot AI</div>
+          <div class="chat-status"><span class="en-text">Online</span><span class="es-text">En línea</span></div>
+        </div>
+        <button class="modal-close" onclick="closeChatModal()" style="position:relative; top:auto; right:auto; margin-left:auto;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      
+      <div class="chat-body" id="chat-body">
+        <div class="msg bot">
+          <span class="en-text">Yo! I'm LevBot, the AI assistant. Ask me anything about the shop!</span>
+          <span class="es-text">¡Hola! Soy LevBot, el asistente de IA. ¡Pregúntame lo que sea sobre la barbería!</span>
+        </div>
+        <div class="chat-suggestions" id="chat-suggestions">
+          <button onclick="sendDemoChat('What are your prices?')"><span class="en-text">💈 Prices</span><span class="es-text">💈 Precios</span></button>
+          <button onclick="sendDemoChat('Where are you located?')"><span class="en-text">📍 Location</span><span class="es-text">📍 Ubicación</span></button>
+          <button onclick="sendDemoChat('Book an appointment')"><span class="en-text">📅 Book</span><span class="es-text">📅 Reservar</span></button>
+        </div>
+      </div>
+      
+      <div class="chat-foot">
+        <div class="chat-input-wrapper">
+          <input type="text" id="chat-input" class="chat-input" placeholder="Type your message..." onkeypress="handleChatEnter(event)">
+          <button class="chat-send" onclick="sendDemoChat()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform: translateX(-1px) translateY(1px);"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Modal Promo Officielle LevelUp -->
+<div id="promo-modal" class="modal-overlay" onclick="if(event.target===this) closePromoModal()">
+  <div class="modal-box" style="text-align: center; max-width: 420px;">
+    <button class="modal-close" onclick="closePromoModal()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <div class="s-label" style="justify-content:center"><div class="s-label-line"></div><span>Demo Mode</span><div class="s-label-line"></div></div>
+    <h2 style="font-size:2.4rem; margin-top:10px; margin-bottom: 20px;">LevelUp</h2>
+    <p style="color:var(--muted); font-size:0.95rem; margin-bottom: 30px; line-height: 1.6;">This feature is part of our demonstration.<br><br>If you love this interactive design and want a professional website for your business, contact us!</p>
+    <a href="https://www.instagram.com/levelup.rb?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr" target="_blank" class="btn-gold" style="justify-content: center; width: 100%; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: #fff; border: none; margin-bottom: 12px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      <span>Message LevelUp</span>
+    </a>
+    <a href="mailto:contact@levelup-ecosystem.com" class="btn-gold" style="justify-content: center; width: 100%; background: rgba(255,255,255,0.05); color: var(--cream); border: 1px solid rgba(255,255,255,0.1);">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      <span>contact@levelup-ecosystem.com</span>
+    </a>
+  </div>
+</div>
+
+<script>
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+const els = document.querySelectorAll('.r');
+const io = new IntersectionObserver(entries => {
+entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('v'); io.unobserve(e.target); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.srv-grid,.team-grid,.rev-grid,.info-grid').forEach(g => {
+g.querySelectorAll('.r').forEach((el,i) => el.style.transitionDelay = `${i*70}ms`);
+});
+els.forEach(el => io.observe(el));
+
+/* --- BOOKING MODAL LOGIC --- */
+function openBookingChoice(e) {
+  if(e) e.preventDefault();
+  closeChatModal();
+  document.getElementById('booking-choice').classList.add('open');
+}
+
+function closeBookingChoice() {
+  document.getElementById('booking-choice').classList.remove('open');
+}
+
+function openDirectBook() {
+  closeBookingChoice();
+  document.getElementById('direct-book').classList.add('open');
+}
+
+function closeDirectBook() {
+  document.getElementById('direct-book').classList.remove('open');
+}
+
+function submitDirectBook(e) {
+  e.preventDefault();
+  // Ferme le formulaire VIP et ouvre immédiatement la pub LevelUp
+  closeDirectBook();
+  openPromoModal();
+}
+
+/* --- PROMO MODAL LOGIC (LEVELUP) --- */
+function openPromoModal(e) {
+  if(e) e.preventDefault();
+  closeBookingChoice();
+  closeChatModal();
+  document.getElementById('promo-modal').classList.add('open');
+}
+
+function closePromoModal() {
+  document.getElementById('promo-modal').classList.remove('open');
+}
+
+/* --- DEMO CHAT AI LOGIC (GEMINI API) --- */
+let isChatTyping = false;
+let chatHistory = [];
+let demoMsgCount = parseInt(localStorage.getItem('levbarber_demo_msg_count') || '0');
+const apiKey = ""; // Fourni automatiquement par l'environnement d'exécution
+
+function openChatModal(e) {
+  if(e) e.preventDefault();
+  closeBookingChoice();
+  document.getElementById('chat-modal').classList.add('open');
+
+  // Bloque l'interface si la limite est déjà atteinte au moment de l'ouverture
+  if (demoMsgCount >= 5) {
+    document.getElementById('chat-input').disabled = true;
+    document.getElementById('chat-input').placeholder = "Demo limit reached.";
+    document.querySelector('.chat-send').disabled = true;
+    document.querySelector('.chat-send').style.opacity = '0.5';
+  }
+}
+
+function closeChatModal() {
+  document.getElementById('chat-modal').classList.remove('open');
+}
+
+function handleChatEnter(e) {
+  if (e.key === 'Enter') sendDemoChat();
+}
+
+async function sendDemoChat(quickMsg) {
+  if (isChatTyping) return;
+  const input = document.getElementById('chat-input');
+  const text = typeof quickMsg === 'string' ? quickMsg : input.value.trim();
+  if (!text) return;
+
+  const chatBody = document.getElementById('chat-body');
+  const suggestions = document.getElementById('chat-suggestions');
+  
+  // Cache les suggestions une fois qu'on a commencé à parler
+  if (suggestions) {
+    suggestions.style.display = 'none';
+  }
+  
+  // VÉRIFICATION DE LA LIMITE DE DÉMO (5 MESSAGES MAX)
+  if (demoMsgCount >= 5) {
+    const botMsg = document.createElement('div');
+    botMsg.className = 'msg bot';
+    botMsg.innerHTML = '<strong style="color:var(--gold)">Demo Completed</strong><br>You have reached the 5-question limit for this preview.<br><br>Want an AI like this for your business? <a href="mailto:contact@levelup-ecosystem.com" style="color:var(--gold);text-decoration:underline;">Contact LevelUp Ecosystem</a>.';
+    chatBody.appendChild(botMsg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+    
+    input.disabled = true;
+    input.placeholder = "Demo limit reached.";
+    document.querySelector('.chat-send').disabled = true;
+    document.querySelector('.chat-send').style.opacity = '0.5';
+    return;
+  }
+
+  // Incrémenter le compteur et sauvegarder en local
+  demoMsgCount++;
+  localStorage.setItem('levbarber_demo_msg_count', demoMsgCount.toString());
+
+  // Message de l'utilisateur
+  const userMsg = document.createElement('div');
+  userMsg.className = 'msg user';
+  userMsg.textContent = text;
+  chatBody.appendChild(userMsg);
+  if(input) input.value = '';
+  chatBody.scrollTop = chatBody.scrollHeight;
+
+  isChatTyping = true;
+
+  // Animation "En train d'écrire..."
+  const typingMsg = document.createElement('div');
+  typingMsg.className = 'msg bot typing';
+  typingMsg.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+  chatBody.appendChild(typingMsg);
+  chatBody.scrollTop = chatBody.scrollHeight;
+
+  // Le "Cerveau" de l'IA (Contexte du Barbershop fictif)
+  const systemPrompt = `You are LevBot, the official AI assistant for LevBarber Studio located at 123 Demo Street, Web City. 
+  You are cool, extremely professional, and concise (1 to 3 sentences maximum). 
+  You only answer questions about the barbershop. If someone asks who created you or the website, answer proudly "LevelUp Ecosystem and Marco". 
+  Services: Haircut ($30), Skin Fade ($35, David specializes in this), Beard Trim ($25), Combo ($50), Kids Cut ($25), Line-Up ($35). 
+  Team: Alex (Lead Barber/Bilingual), Marcus (Owner), David (Fade Specialist), Chris (Style Consultant), James (Versatile). 
+  Hours: Mon-Wed 9:30AM-9PM, Thu 10:30AM-9PM, Fri-Sat 9:30AM-9PM, Sun 10:30AM-6:30PM. Walk-ins are always welcome.`;
+  
+  // Ajout du message à l'historique
+  chatHistory.push({ role: "user", parts: [{ text }] });
+  
+  const payload = {
+    contents: chatHistory,
+    systemInstruction: { parts: [{ text: systemPrompt }] }
+  };
+
+  try {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) throw new Error("Erreur de connexion API");
+    
+    const data = await response.json();
+    const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I am having trouble connecting right now.";
+    
+    // On ajoute la réponse à l'historique pour qu'elle s'en souvienne
+    chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+    
+    // Formatage basique (gras et retours à la ligne)
+    const formattedText = aiText.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/\n/g, "<br>");
+    
+    // On retire l'animation et on affiche le vrai message
+    chatBody.removeChild(typingMsg);
+    const botMsg = document.createElement('div');
+    botMsg.className = 'msg bot';
+    botMsg.innerHTML = formattedText;
+    chatBody.appendChild(botMsg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+    
+  } catch (error) {
+    chatBody.removeChild(typingMsg);
+    chatHistory.pop(); // On retire la question de l'historique en cas d'erreur
+    const errMsg = document.createElement('div');
+    errMsg.className = 'msg bot';
+    errMsg.innerHTML = "<em>Connection error. Please try again later.</em>";
+    chatBody.appendChild(errMsg);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+  
+  isChatTyping = false;
+}
+</script>
+
+</body>
+</html>
